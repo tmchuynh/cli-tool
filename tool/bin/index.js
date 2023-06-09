@@ -2,7 +2,8 @@
 const argPromise = import('arg');
 const chalkPromise = import('chalk');
 require = require("esm")(module);
-const pkgUp = require('pkg-up');
+const getConfig = require('../src/config/config-mgr');
+const start = require('../src/commands/start');
 
 (async () => {
   const arg = await argPromise;
@@ -15,16 +16,8 @@ const pkgUp = require('pkg-up');
     });
 
     if (args['--start']) {
-      const pkgPath = pkgUp.sync({ cwd: process.cwd() });
-      const pkg = require(pkgPath);
-      if (pkg.tool) {
-        console.log('Found configuration', pkg.tool);
-        // TODO: do something with configuration
-      } else {
-        console.log(chalk.yellow('Could not find configuration, using default'));
-        // TODO: get default configuration
-      }
-      console.log(chalk.default.bgCyanBright('starting the app'));
+      const config = getConfig();
+      start(config);
     }
   } catch (e) {
     console.log(chalk.default.yellow(e.message));
