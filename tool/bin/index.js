@@ -2,6 +2,7 @@
 const argPromise = import('arg');
 const chalkPromise = import('chalk');
 require = require("esm")(module);
+const path = require('path');
 
 (async () => {
   const arg = await argPromise;
@@ -14,6 +15,8 @@ require = require("esm")(module);
     });
 
     if (args['--start']) {
+      const pkg = require(path.join(process.cwd(), 'package.json'));
+    // TODO: do something with pkg
       console.log(chalk.default.bgCyanBright('starting the app'));
     }
   } catch (e) {
