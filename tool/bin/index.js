@@ -1,21 +1,28 @@
 #!/usr/bin/env node
-const arg = require('arg');
-const chalk = require('chalk');
+const argPromise = import('arg');
+const chalkPromise = import('chalk');
+require = require("esm")(module);
 
-try {
-  const args = arg({
-    '--start': Boolean,
-    '--build': Boolean,
-  });
+(async () => {
+  const arg = await argPromise;
+  const chalk = await chalkPromise;
 
-  if (args['--start']) {
-    console.log(chalk.bgCyanBright('starting the app'));
+  try {
+    const args = arg.default({
+      '--start': Boolean,
+      '--build': Boolean,
+    });
+
+    if (args['--start']) {
+      console.log(chalk.default.bgCyanBright('starting the app'));
+    }
+  } catch (e) {
+    console.log(chalk.default.yellow(e.message));
+    console.log();
+    usage();
   }
-} catch (e) {
-  console.log(chalk.yellow(e.message));
-  console.log();
-  usage();
-}
+})();
+
 
 function usage() {
   console.log(`${chalk.whiteBright('tool [CMD]')}
