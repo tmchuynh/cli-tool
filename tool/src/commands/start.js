@@ -1,6 +1,8 @@
-const chalk = require('chalk');
+const chalkPromise = import('chalk');
 
-module.export = function start(config) {
-  console.log(chalk.bgCyanBright('  Starting the app  '));
-  console.log(chalk.gray('Received configuration in start -'), config);
-}
+chalkPromise.then((chalk) => {
+  module.exports = function start(config) {
+    console.log(chalk.bgCyanBright('  Starting the app  '));
+    console.log(chalk.gray('Received configuration in start -'), config);
+  };
+});

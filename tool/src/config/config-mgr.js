@@ -11,4 +11,4 @@ module.exports = function getConfig() {
     console.log('Found configuration', result.config);
     return result.config;
   }
-}
+};
